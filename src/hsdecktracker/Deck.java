@@ -76,9 +76,21 @@ public class Deck {
 			if(dce.getCard().equals(card)){
 				if(dce.getAmount()>0){
 					dce.setAmount(dce.getAmount()-1);
+					return;
 				}
 			}
 		}
+	}
+	
+	public void addCard(Card card){
+		for(DeckCardEntry dce: cards){
+			if(dce.getCard().equals(card)){
+				dce.setAmount(dce.getAmount()+1);
+				return;
+			}
+		}
+		DeckCardEntry newDce = new DeckCardEntry(card, 1);
+		cards.add(newDce);
 	}
 	
 	public Deck sortByManaCost(){

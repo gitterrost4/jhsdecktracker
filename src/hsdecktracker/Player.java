@@ -3,6 +3,7 @@ package hsdecktracker;
 public class Player {
 	private String name = null;
 	private Deck deck = null;
+	private boolean mulliganDone = false;
 	/**
 	 * @return the name
 	 */
@@ -26,6 +27,18 @@ public class Player {
 	 */
 	public void setDeck(Deck deck) {
 		this.deck = deck;
+	}
+	/**
+	 * @return the mulliganDone
+	 */
+	public boolean isMulliganDone() {
+		return mulliganDone;
+	}
+	/**
+	 * @param mulliganDone the mulliganDone to set
+	 */
+	public void setMulliganDone(boolean mulliganDone) {
+		this.mulliganDone = mulliganDone;
 	}
 	
 

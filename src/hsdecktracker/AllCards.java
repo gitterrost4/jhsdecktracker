@@ -61,7 +61,7 @@ public class AllCards {
 	
 	public static Card findCardByNameSane(String name){
 		for(Card card: cardList){
-			System.err.println("Loading Card "+card.getName());
+		//	System.err.println("Loading Card "+card.getName());
 			if(card.getName().equals(name) && (card.getType().equals("Minion") || card.getType().equals("Spell"))){
 				return card;
 			}

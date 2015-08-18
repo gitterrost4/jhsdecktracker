@@ -3,7 +3,7 @@ package hsdecktracker;
 public class Game {
 	private Player friendlyPlayer = null;
 	private Player opposingPlayer = null;
-	private GameState gameState = GameState.MULLIGAN;
+	private GameState gameState = GameState.START;
 	
 	public Game(){
 		friendlyPlayer = new Player();
@@ -48,7 +48,11 @@ public class Game {
 	}
 	
 	public enum GameState{
+		START,
+		STARTING_FRIENDLY_DRAW,
+		STARTING_OPPOSING_DRAW,
 		MULLIGAN,
+		MULLIGAN_FIRST_DONE,
 		NORMAL,
 		FINISHED
 	}

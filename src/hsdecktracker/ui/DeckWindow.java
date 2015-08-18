@@ -1,32 +1,18 @@
 package hsdecktracker.ui;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
 
-import hsdecktracker.Deck;
-import hsdecktracker.DeckCardEntry;
-import hsdecktracker.Game;
+import hsdecktracker.*;
 import hsdecktracker.Game.GameState;
-import hsdecktracker.HSLogHandler;
 
 public class DeckWindow {
 	private static Shell shell = null;
@@ -94,7 +80,7 @@ public class DeckWindow {
 //            					updateShell(display, shell, deck);
 //        					}
         				}
-        			}	while(!shell.isDisposed());
+        			}	while(shell!=null && !shell.isDisposed());
         			br.close();
         		} catch (Exception e1) {
         			e1.printStackTrace();
@@ -128,9 +114,6 @@ public class DeckWindow {
 						frameLabel.setImage(frameOverlayImg);
 						frameLabel.pack();
 					}
-					GC gc = new GC(comp);
-					gc.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
-					gc.fillRectangle(comp.getBounds());
 					
 					GridData layoutData = new GridData(GridData.FILL_BOTH);
 					layoutData.verticalAlignment = SWT.CENTER;
@@ -159,7 +142,6 @@ public class DeckWindow {
 					manaCostLabel.setLayoutData(layoutData);
 					manaCostLabel.setAlignment(SWT.CENTER);
 					
-					System.err.println(dce.getCard().getName()+":"+dce.getCard().getRarity());
 					if(dce.getAmount()>1 && dce.getAmount()<10 || dce.getCard().getRarity().equals("Legendary")){
 						
 							Label cardAmountLabel = new Label(comp,SWT.NORMAL);
@@ -192,7 +174,6 @@ public class DeckWindow {
 					
 					Label imageLabel = new Label(comp,SWT.NORMAL);
 					String fileName = dce.getCard().getName().toLowerCase().replaceAll("[^a-z0-9]", "-")+".png";
-					System.err.println(fileName);
 					URL url = DeckWindow.class.getResource("/resources/cards/"+fileName);
 					if(url != null){
 						Image img = new Image(display, url.getFile());
