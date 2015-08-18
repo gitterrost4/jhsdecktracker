@@ -1,15 +1,32 @@
 package hsdecktracker.ui;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
-import hsdecktracker.*;
+import hsdecktracker.Deck;
+import hsdecktracker.DeckCardEntry;
+import hsdecktracker.Game;
 import hsdecktracker.Game.GameState;
+import hsdecktracker.HSLogHandler;
 
 public class DeckWindow {
 	private static Shell shell = null;
@@ -21,12 +38,12 @@ public class DeckWindow {
 		Game game = new Game();
 		deck.sortByManaCost();
 		game.getFriendlyPlayer().setDeck(deck);
-		shell = new Shell(display, SWT.TOOL | SWT.ON_TOP);
+		shell = new Shell(display, SWT.TOOL | SWT.ON_TOP | SWT.TRANSPARENT);
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
-		shell.setSize(200,800);
-		shell.setLocation(display.getBounds().width-200,display.getBounds().height/2-400);
+		shell.setAlpha(255);
+		shell.setLocation(display.getBounds().width-500,display.getBounds().height/2-400);
 		updateShell(display, shell, deck);
 		shell.open();
 		shell.addDisposeListener(new DisposeListener() {
@@ -100,12 +117,97 @@ public class DeckWindow {
 					control.dispose();
 				}
 				for(DeckCardEntry dce : deck.getCards()){
-					Label label = new Label(shell,SWT.BORDER);
+					Composite comp = new Composite(shell, SWT.TRANSPARENT);
+					
 
-					label.setText(dce.getCard().getCost()+" "+dce.getCard().getName()+" "+dce.getAmount()+"\n");
+					if(dce.getAmount() == 0){
+						ImageData frameOverlayImgData = new ImageData(DeckWindow.class.getResource("/resources/frame_overlay.png").getFile());
+		//				frameOverlayImgData.alpha = 128;
+						Image frameOverlayImg = new Image(display, frameOverlayImgData);						
+						Label frameLabel = new Label(comp, SWT.NORMAL);
+						frameLabel.setImage(frameOverlayImg);
+						frameLabel.pack();
+					}
+					GC gc = new GC(comp);
+					gc.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
+					gc.fillRectangle(comp.getBounds());
+					
+					GridData layoutData = new GridData(GridData.FILL_BOTH);
+					layoutData.verticalAlignment = SWT.CENTER;
+					layoutData.horizontalAlignment = SWT.CENTER;
+					layoutData.grabExcessVerticalSpace = true;
+					
+
+					Label label = new Label(comp,SWT.NORMAL);
+					label.setText(dce.getCard().getName());
+					Font labelFont = new Font(display, new FontData( "Arial", 10, SWT.BOLD));
+					label.setFont(labelFont);
+					label.setForeground(new Color(display, 255, 255, 255));
+					label.setBackground(new Color(display, 62, 69, 82));
+					label.setLocation(40, 12);
+					label.setLayoutData(layoutData);					
 					label.pack();
+
+					Image frameImg = new Image(display, DeckWindow.class.getResource("/resources/frame_rarity_common.png").getFile());
+					
+					Label manaCostLabel = new Label(comp,SWT.NORMAL);
+					manaCostLabel.setBounds(4,5,30,29);
+					manaCostLabel.setText(dce.getCard().getCost()+"");
+					manaCostLabel.setForeground(new Color(display, 255, 255, 255));
+					Font manaCostFont = new Font(display, new FontData( "Arial", 16, SWT.BOLD));
+					manaCostLabel.setFont(manaCostFont);
+					manaCostLabel.setLayoutData(layoutData);
+					manaCostLabel.setAlignment(SWT.CENTER);
+					
+					System.err.println(dce.getCard().getName()+":"+dce.getCard().getRarity());
+					if(dce.getAmount()>1 && dce.getAmount()<10 || dce.getCard().getRarity().equals("Legendary")){
+						
+							Label cardAmountLabel = new Label(comp,SWT.NORMAL);
+							cardAmountLabel.setLocation(193,7);
+							Image amountImage;
+							if(dce.getAmount()>1){
+								amountImage = new Image(display, DeckWindow.class.getResource("/resources/frame_"+dce.getAmount()+".png").getFile());
+							} else {
+								//Legendary
+								amountImage = new Image(display, DeckWindow.class.getResource("/resources/frame_legendary.png").getFile());	
+							}
+							cardAmountLabel.setImage(amountImage);
+							cardAmountLabel.pack();
+						
+
+
+						Label cardCountboxLabel = new Label(comp,SWT.NORMAL);
+						cardCountboxLabel.setLocation(187,6);
+						Image countboxImage = new Image(display,DeckWindow.class.getResource("/resources/frame_countbox.png").getFile());
+						cardCountboxLabel.setImage(countboxImage);
+						cardCountboxLabel.pack();
+
+					}
+					
+					
+					
+					Label frameLabel = new Label(comp, SWT.NORMAL);
+					frameLabel.setImage(frameImg);
+					frameLabel.pack();
+					
+					Label imageLabel = new Label(comp,SWT.NORMAL);
+					String fileName = dce.getCard().getName().toLowerCase().replaceAll("[^a-z0-9]", "-")+".png";
+					System.err.println(fileName);
+					URL url = DeckWindow.class.getResource("/resources/cards/"+fileName);
+					if(url != null){
+						Image img = new Image(display, url.getFile());
+						imageLabel.setImage(img);
+						imageLabel.setLocation(frameImg.getBounds().width-img.getBounds().width-6,0);
+					}
+					imageLabel.pack();
+					
+
+
+					comp.pack();
 				}
 				shell.layout(true);
+				shell.pack();
+				shell.setLocation(display.getBounds().width-shell.getBounds().width, (display.getBounds().height-shell.getBounds().height)/2);
 			}
 		});
 
