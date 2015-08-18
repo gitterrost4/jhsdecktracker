@@ -19,7 +19,7 @@ public class HSLogHandler {
 	}
 	
 	public static boolean handleLogLine(String logLine, Game game){
-		System.err.println(logLine);
+	//	System.err.println(logLine);
 		if(isLineGameFinished(logLine)){
 			game.setGameState(GameState.FINISHED);
 			return true;
