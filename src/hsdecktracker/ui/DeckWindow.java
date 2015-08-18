@@ -104,9 +104,8 @@ public class DeckWindow {
 
 					label.setText(dce.getCard().getCost()+" "+dce.getCard().getName()+" "+dce.getAmount()+"\n");
 					label.pack();
-				}			
-				shell.pack();
-				shell.setSize(200,800);
+				}
+				shell.layout(true);
 			}
 		});
 

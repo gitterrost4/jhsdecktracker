@@ -29,7 +29,8 @@ public class Test {
 							label.setText("HELLO"+i+i);
 							label.pack();
 						}
-						testShell.pack();
+						testShell.layout(true);
+						
 					}
 				});
 			}
