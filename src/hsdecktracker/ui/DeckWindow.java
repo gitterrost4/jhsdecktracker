@@ -1,7 +1,6 @@
 package hsdecktracker.ui;
 
 import java.io.*;
-import java.net.URL;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -28,7 +27,7 @@ public class DeckWindow {
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
-		shell.setAlpha(255);
+		//shell.setAlpha(255);
 		shell.setLocation(display.getBounds().width-500,display.getBounds().height/2-400);
 		updateShell(display, shell, deck);
 		shell.open();
@@ -107,7 +106,7 @@ public class DeckWindow {
 					
 
 					if(dce.getAmount() == 0){
-						ImageData frameOverlayImgData = new ImageData(DeckWindow.class.getResource("/resources/frame_overlay.png").getFile());
+						ImageData frameOverlayImgData = new ImageData(DeckWindow.class.getResourceAsStream("/resources/frame_overlay.png"));
 		//				frameOverlayImgData.alpha = 128;
 						Image frameOverlayImg = new Image(display, frameOverlayImgData);						
 						Label frameLabel = new Label(comp, SWT.NORMAL);
@@ -131,7 +130,7 @@ public class DeckWindow {
 					label.setLayoutData(layoutData);					
 					label.pack();
 
-					Image frameImg = new Image(display, DeckWindow.class.getResource("/resources/frame_rarity_common.png").getFile());
+					Image frameImg = new Image(display, DeckWindow.class.getResourceAsStream("/resources/frame_rarity_common.png"));
 					
 					Label manaCostLabel = new Label(comp,SWT.NORMAL);
 					manaCostLabel.setBounds(4,5,30,29);
@@ -148,10 +147,10 @@ public class DeckWindow {
 							cardAmountLabel.setLocation(193,7);
 							Image amountImage;
 							if(dce.getAmount()>1){
-								amountImage = new Image(display, DeckWindow.class.getResource("/resources/frame_"+dce.getAmount()+".png").getFile());
+								amountImage = new Image(display, DeckWindow.class.getResourceAsStream("/resources/frame_"+dce.getAmount()+".png"));
 							} else {
 								//Legendary
-								amountImage = new Image(display, DeckWindow.class.getResource("/resources/frame_legendary.png").getFile());	
+								amountImage = new Image(display, DeckWindow.class.getResourceAsStream("/resources/frame_legendary.png"));	
 							}
 							cardAmountLabel.setImage(amountImage);
 							cardAmountLabel.pack();
@@ -160,7 +159,7 @@ public class DeckWindow {
 
 						Label cardCountboxLabel = new Label(comp,SWT.NORMAL);
 						cardCountboxLabel.setLocation(187,6);
-						Image countboxImage = new Image(display,DeckWindow.class.getResource("/resources/frame_countbox.png").getFile());
+						Image countboxImage = new Image(display,DeckWindow.class.getResourceAsStream("/resources/frame_countbox.png"));
 						cardCountboxLabel.setImage(countboxImage);
 						cardCountboxLabel.pack();
 
@@ -174,9 +173,9 @@ public class DeckWindow {
 					
 					Label imageLabel = new Label(comp,SWT.NORMAL);
 					String fileName = dce.getCard().getName().toLowerCase().replaceAll("[^a-z0-9]", "-")+".png";
-					URL url = DeckWindow.class.getResource("/resources/cards/"+fileName);
-					if(url != null){
-						Image img = new Image(display, url.getFile());
+					InputStream is = DeckWindow.class.getResourceAsStream("/resources/cards/"+fileName);
+					if(is != null){
+						Image img = new Image(display, is);
 						imageLabel.setImage(img);
 						imageLabel.setLocation(frameImg.getBounds().width-img.getBounds().width-6,0);
 					}

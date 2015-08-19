@@ -14,11 +14,11 @@ public class AllCards {
 	}
 
 	private static List<Card> loadCardsFromJsonFile(){
-		String cardsFile = AllCards.class.getResource("/resources/AllSets.json").getFile();
+		InputStream cardsFile = AllCards.class.getResourceAsStream("/resources/AllSets.json");
 		StringBuilder sb = new StringBuilder();
 		List<Card> result = new LinkedList<>();
 		try{
-			BufferedReader br = new BufferedReader(new FileReader(cardsFile));
+			BufferedReader br = new BufferedReader(new InputStreamReader(cardsFile));
 			String line;
 			while((line = br.readLine())!=null){
 				sb.append(line);

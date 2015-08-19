@@ -25,7 +25,7 @@ public class MainWindow {
         // of the widgets in the container
         shell.setSize(300,800);
         shell.setLayout(new RowLayout());
-        shell.setAlpha(100);
+       // shell.setAlpha(100);
         label = new Label(shell, SWT.BORDER);
         label.setText("Test");
         label.pack();
