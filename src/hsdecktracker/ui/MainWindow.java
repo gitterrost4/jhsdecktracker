@@ -3,7 +3,7 @@ package hsdecktracker.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
 import hsdecktracker.Deck;
@@ -13,6 +13,8 @@ public class MainWindow {
 	protected static Shell shell;
 	protected static Label label;
     protected static Deck deck = null;
+    private static Button stopGameButton;
+    private static Button newGameButton;
 
     public static void printDeck(Deck deck, Label label){
     	
@@ -24,18 +26,20 @@ public class MainWindow {
         // the layout manager handle the layout
         // of the widgets in the container
         shell.setSize(300,800);
-        shell.setLayout(new RowLayout());
+        FormLayout layout = new FormLayout();
+        layout.marginHeight = 5;
+        layout.marginWidth = 5;
+        shell.setLayout(layout);
+        
        // shell.setAlpha(100);
-        label = new Label(shell, SWT.BORDER);
-        label.setText("Test");
-        label.pack();
-        Button newGameButton = new Button(shell, SWT.PUSH);
+        newGameButton = new Button(shell, SWT.PUSH);
         newGameButton.setText("New Game");
         newGameButton.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				ClassSelectWindow.showClassSelectWindow(display);
+				newGameButton.setEnabled(false);
 			}
 			
 			@Override
@@ -44,6 +48,23 @@ public class MainWindow {
 			}
 		});
         newGameButton.pack();
+        
+        stopGameButton = new Button(shell, SWT.PUSH);
+        stopGameButton.setEnabled(false);
+        stopGameButton.setText("Stop Game");
+        stopGameButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				DeckWindow.stopGame();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// empty
+				
+			}
+		});
         
         Button settingsButton = new Button(shell, SWT.PUSH);
         settingsButton.setText("Settings");
@@ -63,6 +84,49 @@ public class MainWindow {
         	
         });
         
+        Button exitButton = new Button(shell, SWT.PUSH);
+        exitButton.setText("Exit");
+        exitButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				shell.dispose();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				//empty
+			}
+		});
+        
+        //Formatting the controls
+        
+        FormData formData = new FormData();
+        formData.top = new FormAttachment(0, 0);
+        formData.left = new FormAttachment(0,0);
+        formData.right = new FormAttachment(50,-2);
+        newGameButton.setLayoutData(formData);
+        
+        formData = new FormData();
+        formData.left = new FormAttachment(newGameButton, 5);
+        formData.top = new FormAttachment(0,0);
+        formData.right = new FormAttachment(100, 0);
+        stopGameButton.setLayoutData(formData);
+        
+        formData = new FormData();
+        formData.top = new FormAttachment(newGameButton, 5);
+        formData.left = new FormAttachment(0, 0);
+        formData.right = new FormAttachment(100,0);
+        settingsButton.setLayoutData(formData);
+
+        formData = new FormData();
+        formData.top = new FormAttachment(settingsButton, 5);
+        formData.left = new FormAttachment(0, 0);
+        formData.right = new FormAttachment(100,0);
+        exitButton.setLayoutData(formData);
+
+        
+        
         shell.open();
         
         while (!shell.isDisposed()) {
@@ -75,4 +139,13 @@ public class MainWindow {
 		System.err.println("ShowWindow");
 		shell.setVisible(true);
 	}
+	
+	public static void setStopGameButtonEnabled(boolean isEnabled){
+		stopGameButton.setEnabled(isEnabled);
+	}
+	public static void setNewGameButtonEnabled(boolean isEnabled){
+		newGameButton.setEnabled(isEnabled);
+	}
+	
+	
 }

@@ -19,7 +19,7 @@ public class DeckWindow {
 		if(shell!=null){
 			return;
 		}
-
+		MainWindow.setStopGameButtonEnabled(true);
 		Game game = new Game();
 		deck.sortByManaCost();
 		game.getFriendlyPlayer().setDeck(deck);
@@ -36,7 +36,8 @@ public class DeckWindow {
 			@Override
 			public void widgetDisposed(DisposeEvent arg0) {
 				shell = null;
-				MainWindow.show();				
+				MainWindow.setNewGameButtonEnabled(true);
+				MainWindow.setStopGameButtonEnabled(false);
 			}
 		});
 		File outputLogFile = new File(Configuration.getConfig().getProperty("hearthstoneDir")+"/Hearthstone_Data/output_log.txt");		
@@ -220,5 +221,11 @@ public class DeckWindow {
 		br.close();
 		System.err.println("End Finding Current Match");
 		return result;
+	}
+	
+	public static void stopGame(){
+		if(shell != null){
+			shell.dispose();
+		}
 	}
 }
