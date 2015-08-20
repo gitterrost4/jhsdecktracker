@@ -36,7 +36,6 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				ClassSelectWindow.showClassSelectWindow(display);
-				shell.setVisible(false);
 			}
 			
 			@Override
@@ -45,6 +44,25 @@ public class MainWindow {
 			}
 		});
         newGameButton.pack();
+        
+        Button settingsButton = new Button(shell, SWT.PUSH);
+        settingsButton.setText("Settings");
+        settingsButton.addSelectionListener(new SelectionListener(){
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				SettingsWindow.showSettingsWindow(display);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        	
+        });
+        
         shell.open();
         
         while (!shell.isDisposed()) {

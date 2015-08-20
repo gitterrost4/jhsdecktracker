@@ -10,6 +10,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.*;
 
+import hsdecktracker.Configuration;
 import hsdecktracker.Deck;
 
 public class DeckSelectWindow {
@@ -22,7 +23,7 @@ public class DeckSelectWindow {
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
-		File f = new File("/home/gitterrost4/hsdecks/"+playerClass);
+		File f = new File(Configuration.getConfig().getProperty("deckDir")+"/"+playerClass);
 		ArrayList<File> decks = new ArrayList<>(Arrays.asList(f.listFiles()));
 		for(File deckFile : decks){
 			String deckName = deckFile.getName();

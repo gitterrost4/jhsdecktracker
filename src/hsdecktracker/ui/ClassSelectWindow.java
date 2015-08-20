@@ -9,6 +9,8 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.*;
 
+import hsdecktracker.Configuration;
+
 public class ClassSelectWindow {
 	private static Shell shell = null;
 	public static void showClassSelectWindow(Display display){
@@ -19,7 +21,23 @@ public class ClassSelectWindow {
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
-		File f = new File("/home/gitterrost4/hsdecks");
+		shell.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent arg0) {
+				shell=null;
+			}
+		});
+
+		File f = new File(Configuration.getConfig().getProperty("deckDir"));
+		if(!f.exists()){
+			MessageBox message = new MessageBox(shell,SWT.ICON_ERROR| SWT.OK);
+			message.setMessage("Deck directory is not configured properly or not writable. Please reconfigure.");
+			message.setText("Configuration Error");
+			message.open();
+			shell.dispose();
+			return;
+		}
 		ArrayList<File> classes = new ArrayList<>(Arrays.asList(f.listFiles()));
 		for(File playerClassFile : classes){
 			String playerClass = playerClassFile.getName();
@@ -41,12 +59,5 @@ public class ClassSelectWindow {
 			b.pack();
 		}
 		shell.open();
-		shell.addDisposeListener(new DisposeListener() {
-			
-			@Override
-			public void widgetDisposed(DisposeEvent arg0) {
-				shell=null;
-			}
-		});
 	}
 }

@@ -39,12 +39,13 @@ public class DeckWindow {
 				MainWindow.show();				
 			}
 		});
+		File outputLogFile = new File(Configuration.getConfig().getProperty("hearthstoneDir")+"/Hearthstone_Data/output_log.txt");		
         Thread updateThread = new Thread(){
         	public void run(){
         		
         		try {
-        			BufferedReader br = new BufferedReader(new FileReader("/home/gitterrost4/.wine/drive_c/Program Files/Hearthstone/Hearthstone_Data/output_log.txt"));
-        			int lastIndex = findLastGameStartOrEndIndex();
+        			BufferedReader br = new BufferedReader(new FileReader(outputLogFile));
+        			int lastIndex = findLastGameStartOrEndIndex(outputLogFile);
         			for(int i = 0; i<=lastIndex; i++){
         				br.readLine();
         			}
@@ -91,7 +92,14 @@ public class DeckWindow {
         		}
         	}
         };
-        updateThread.start();
+		if(!outputLogFile.exists()){
+			MessageBox message = new MessageBox(shell, SWT.ICON_ERROR|SWT.OK);
+			message.setMessage("could not find Hearthstone output log. Maybe the installation directory is not configured properly. Game will not be tracked.");
+			message.setText("Configuration Error");
+			message.open();			
+		} else {
+			updateThread.start();
+		}
         
 
 	}
@@ -193,11 +201,11 @@ public class DeckWindow {
 
 	}
 	
-	private static int findLastGameStartOrEndIndex() throws IOException{
+	private static int findLastGameStartOrEndIndex(File outputLogFile) throws IOException{
 		System.err.println("Start Finding Current Match");
 		int result = -1;
 		int index = 0;
-		FileReader fr = new FileReader("/home/gitterrost4/.wine/drive_c/Program Files/Hearthstone/Hearthstone_Data/output_log.txt");
+		FileReader fr = new FileReader(outputLogFile);
 		BufferedReader br = new BufferedReader(fr);
 		String line;
 		while((line = br.readLine())!=null){
