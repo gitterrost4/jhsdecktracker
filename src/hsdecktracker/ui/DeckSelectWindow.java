@@ -19,7 +19,7 @@ public class DeckSelectWindow {
 		if(shell!=null){
 			return;
 		}
-		shell = new Shell(display);
+		shell = new Shell(display, SWT.APPLICATION_MODAL);
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
@@ -49,6 +49,7 @@ public class DeckSelectWindow {
 			});
 			b.pack();
 		}
+		shell.pack();
 		shell.open();
 		shell.addDisposeListener(new DisposeListener() {
 			

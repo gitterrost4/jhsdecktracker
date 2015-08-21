@@ -19,6 +19,7 @@ public class DeckWindow {
 		if(shell!=null){
 			return;
 		}
+		MainWindow.setNewGameButtonEnabled(false);
 		MainWindow.setStopGameButtonEnabled(true);
 		Game game = new Game();
 		deck.sortByManaCost();

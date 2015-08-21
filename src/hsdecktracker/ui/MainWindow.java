@@ -40,7 +40,6 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				ClassSelectWindow.showClassSelectWindow(display);
-				newGameButton.setEnabled(false);
 			}
 			
 			@Override
@@ -51,7 +50,7 @@ public class MainWindow {
         newGameButton.pack();
         
         stopGameButton = new Button(shell, SWT.PUSH);
-        stopGameButton.setEnabled(false);
+        stopGameButton.setVisible(false);
         stopGameButton.setText("Stop Game");
         stopGameButton.addSelectionListener(new SelectionListener() {
 			
@@ -122,11 +121,11 @@ public class MainWindow {
         FormData formData = new FormData();
         formData.top = new FormAttachment(0, 0);
         formData.left = new FormAttachment(0,0);
-        formData.right = new FormAttachment(50,-2);
+        formData.right = new FormAttachment(100,0);
         newGameButton.setLayoutData(formData);
         
         formData = new FormData();
-        formData.left = new FormAttachment(newGameButton, 5);
+        formData.left = new FormAttachment(0, 0);
         formData.top = new FormAttachment(0,0);
         formData.right = new FormAttachment(100, 0);
         stopGameButton.setLayoutData(formData);
@@ -164,10 +163,10 @@ public class MainWindow {
 	}
 	
 	public static void setStopGameButtonEnabled(boolean isEnabled){
-		stopGameButton.setEnabled(isEnabled);
+		stopGameButton.setVisible(isEnabled);
 	}
 	public static void setNewGameButtonEnabled(boolean isEnabled){
-		newGameButton.setEnabled(isEnabled);
+		newGameButton.setVisible(isEnabled);
 	}
 	
 	
