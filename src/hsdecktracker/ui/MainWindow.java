@@ -6,6 +6,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
+import hsdecktracker.CardCollection;
 import hsdecktracker.Deck;
 
 public class MainWindow {
@@ -99,6 +100,23 @@ public class MainWindow {
 			}
 		});
         
+        Button testButton = new Button(shell, SWT.PUSH);
+        testButton.setText("Test");
+        testButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				CardCollection cc = new CardCollection();
+				cc.toJson();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+        
         //Formatting the controls
         
         FormData formData = new FormData();
@@ -124,6 +142,11 @@ public class MainWindow {
         formData.left = new FormAttachment(0, 0);
         formData.right = new FormAttachment(100,0);
         exitButton.setLayoutData(formData);
+
+        formData = new FormData();
+        formData.bottom = new FormAttachment(100, 0);
+        formData.left = new FormAttachment(0, 0);
+        testButton.setLayoutData(formData);
 
         
         
