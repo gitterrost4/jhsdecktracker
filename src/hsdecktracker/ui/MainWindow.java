@@ -77,12 +77,24 @@ public class MainWindow {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
+				// empty	
 			}
-        	
-        	
         });
+        
+        Button collectionButton = new Button(shell, SWT.PUSH);
+        collectionButton.setText("Manage Collection");
+        collectionButton.addSelectionListener(new SelectionListener() {
+	
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				CollectionWindow.showCollectionWindow(display);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// empty
+			}
+		});
         
         Button exitButton = new Button(shell, SWT.PUSH);
         exitButton.setText("Exit");
@@ -106,7 +118,7 @@ public class MainWindow {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				CardCollection cc = new CardCollection();
-				cc.toJson();
+				System.err.println(cc.toJson().toString());
 			}
 			
 			@Override
@@ -134,8 +146,14 @@ public class MainWindow {
         formData.top = new FormAttachment(newGameButton, 5);
         formData.left = new FormAttachment(0, 0);
         formData.right = new FormAttachment(100,0);
+        collectionButton.setLayoutData(formData);
+        
+        formData = new FormData();
+        formData.top = new FormAttachment(collectionButton, 5);
+        formData.left = new FormAttachment(0, 0);
+        formData.right = new FormAttachment(100,0);
         settingsButton.setLayoutData(formData);
-
+        
         formData = new FormData();
         formData.top = new FormAttachment(settingsButton, 5);
         formData.left = new FormAttachment(0, 0);

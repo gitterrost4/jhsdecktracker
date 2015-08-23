@@ -10,12 +10,11 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.*;
 
-import hsdecktracker.Configuration;
-import hsdecktracker.Deck;
+import hsdecktracker.*;
 
 public class DeckSelectWindow {
 	private static Shell shell = null;
-	public static void showDeckSelectWindow(Display display, String playerClass){
+	public static void showDeckSelectWindow(Display display, PlayerClass playerClass){
 		if(shell!=null){
 			return;
 		}
@@ -23,6 +22,13 @@ public class DeckSelectWindow {
 		FillLayout layout = new FillLayout();
 		layout.type = SWT.VERTICAL;
 		shell.setLayout(layout);
+		shell.addDisposeListener(new DisposeListener() {
+			
+			@Override
+			public void widgetDisposed(DisposeEvent arg0) {
+				shell=null;
+			}
+		});
 		File f = new File(Configuration.getConfig().getProperty("deckDir")+"/"+playerClass);
 		ArrayList<File> decks = new ArrayList<>(Arrays.asList(f.listFiles()));
 		for(File deckFile : decks){
@@ -51,13 +57,7 @@ public class DeckSelectWindow {
 		}
 		shell.pack();
 		shell.open();
-		shell.addDisposeListener(new DisposeListener() {
-			
-			@Override
-			public void widgetDisposed(DisposeEvent arg0) {
-				shell=null;
-			}
-		});
+
 		
 	}
 }

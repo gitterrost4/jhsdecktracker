@@ -31,7 +31,8 @@ public class AllCards {
 		try{
 			JSONObject rootNode = new JSONObject(jsonString);
 			for(Iterator<String> iterator = rootNode.keys(); iterator.hasNext();){
-				JSONArray cardArray = rootNode.getJSONArray(iterator.next());
+				String set = iterator.next();
+				JSONArray cardArray = rootNode.getJSONArray(set);
 				for(int i = 0; i<cardArray.length(); i++){
 					JSONObject jsonCard = cardArray.getJSONObject(i);
 					Card card = new Card();
@@ -45,10 +46,14 @@ public class AllCards {
                     if(jsonCard.has("flavor")) card.setFlavor(jsonCard.getString("flavor"));
                     if(jsonCard.has("artist")) card.setArtist(jsonCard.getString("artist"));
                     if(jsonCard.has("collectible")) card.setCollectible(jsonCard.getBoolean("collectible"));
-                    if(jsonCard.has("playerClass")) card.setPlayerClass(jsonCard.getString("playerClass"));
+                    try{
+                    	if(jsonCard.has("playerClass")) card.setPlayerClass(PlayerClass.valueOf(jsonCard.getString("playerClass")));
+                    } catch (IllegalArgumentException e){
+                    	
+                    }
                     if(jsonCard.has("howToGet")) card.setHowToGet(jsonCard.getString("howToGet"));
                     if(jsonCard.has("howToGetGold")) card.setHowToGetGold(jsonCard.getString("howToGetGold"));
-
+                    card.setCardSet(set);
 
 					result.add(card);
 				}
@@ -88,4 +93,16 @@ public class AllCards {
 		}
 		return null;
 	}
+	
+	public static List<Card> getCollectibleCards(){
+		List<Card> result = new ArrayList<>();
+		for(Card card: cardList){
+			if(card.getCollectible() && !card.getType().equals("Hero")){
+				System.err.println(card.getName()+": " +card.getType());
+				result.add(card);
+			}
+		}
+		return result;
+	}
+	
 }

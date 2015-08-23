@@ -3,19 +3,14 @@ package hsdecktracker.ui;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.*;
 
 import hsdecktracker.Configuration;
+import hsdecktracker.PlayerClass;
 
 public class ClassSelectWindow {
 	private static Shell shell = null;
@@ -50,191 +45,213 @@ public class ClassSelectWindow {
 			return;
 		}
 				
-		Button druidButton = new Button(shell, SWT.PUSH);
-//		druidButton.setText("Druid");
-		druidButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/druid.png")));
-		druidButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Druid");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button hunterButton = new Button(shell, SWT.PUSH);
-//		hunterButton.setText("Hunter");
-		hunterButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/hunter.png")));
-		hunterButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Hunter");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button mageButton = new Button(shell, SWT.PUSH);
-		mageButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/mage.png")));
-//		mageButton.setText("Mage");
-		mageButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Mage");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button paladinButton = new Button(shell, SWT.PUSH);
-		paladinButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/paladin.png")));
-//		paladinButton.setText("Paladin");
-		paladinButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Paladin");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button priestButton = new Button(shell, SWT.PUSH);
-		priestButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/priest.png")));
-//		priestButton.setText("Priest");
-		priestButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Priest");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button rogueButton = new Button(shell, SWT.PUSH);
-		rogueButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/rogue.png")));
-//		rogueButton.setText("Rogue");
-		rogueButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Rogue");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button shamanButton = new Button(shell, SWT.PUSH);
-		shamanButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/shaman.png")));
-//		shamanButton.setText("Shaman");
-		shamanButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Shaman");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button warlockButton = new Button(shell, SWT.PUSH);
-		warlockButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/warlock.png")));
-//		warlockButton.setText("Warlock");
-		warlockButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Warlock");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		Button warriorButton = new Button(shell, SWT.PUSH);
-		warriorButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/warrior.png")));
-//		warriorButton.setText("Warrior");
-		warriorButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				DeckSelectWindow.showDeckSelectWindow(display, "Warrior");
-				shell.dispose();				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
+//		Button druidButton = new Button(shell, SWT.PUSH);
+////		druidButton.setText("Druid");
+//		druidButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/druid.png")));
+//		druidButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Druid");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button hunterButton = new Button(shell, SWT.PUSH);
+////		hunterButton.setText("Hunter");
+//		hunterButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/hunter.png")));
+//		hunterButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Hunter");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button mageButton = new Button(shell, SWT.PUSH);
+//		mageButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/mage.png")));
+////		mageButton.setText("Mage");
+//		mageButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Mage");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button paladinButton = new Button(shell, SWT.PUSH);
+//		paladinButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/paladin.png")));
+////		paladinButton.setText("Paladin");
+//		paladinButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Paladin");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button priestButton = new Button(shell, SWT.PUSH);
+//		priestButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/priest.png")));
+////		priestButton.setText("Priest");
+//		priestButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Priest");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button rogueButton = new Button(shell, SWT.PUSH);
+//		rogueButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/rogue.png")));
+////		rogueButton.setText("Rogue");
+//		rogueButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Rogue");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button shamanButton = new Button(shell, SWT.PUSH);
+//		shamanButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/shaman.png")));
+////		shamanButton.setText("Shaman");
+//		shamanButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Shaman");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button warlockButton = new Button(shell, SWT.PUSH);
+//		warlockButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/warlock.png")));
+////		warlockButton.setText("Warlock");
+//		warlockButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Warlock");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		
+//		Button warriorButton = new Button(shell, SWT.PUSH);
+//		warriorButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/warrior.png")));
+////		warriorButton.setText("Warrior");
+//		warriorButton.addSelectionListener(new SelectionListener() {
+//			
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				DeckSelectWindow.showDeckSelectWindow(display, "Warrior");
+//				shell.dispose();				
+//			}
+//			
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+
 		GridData data = new GridData();
 		data.verticalAlignment = GridData.FILL;
 		data.horizontalAlignment = GridData.FILL;
 		data.grabExcessHorizontalSpace = true;
 		data.grabExcessVerticalSpace = true;
-		druidButton.setLayoutData(data);
-		hunterButton.setLayoutData(data);
-		mageButton.setLayoutData(data);
-		paladinButton.setLayoutData(data);
-		priestButton.setLayoutData(data);
-		rogueButton.setLayoutData(data);
-		shamanButton.setLayoutData(data);
-		warlockButton.setLayoutData(data);
-		warriorButton.setLayoutData(data);
-		druidButton.pack();
-		hunterButton.pack();
-		mageButton.pack();
-		paladinButton.pack();
-		priestButton.pack();
-		rogueButton.pack();
-		shamanButton.pack();
-		warlockButton.pack();
-		warriorButton.pack();
+		
+		for(PlayerClass pClass : PlayerClass.values()){
+			Button classButton = new Button(shell, SWT.PUSH);
+			System.err.println(pClass.toString().toLowerCase());
+			classButton.setImage(new Image(display, ClassSelectWindow.class.getResourceAsStream("/resources/classes/"+pClass.toString().toLowerCase()+".png")));
+			classButton.addSelectionListener(new SelectionListener() {
+				
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					DeckSelectWindow.showDeckSelectWindow(display, pClass);
+					shell.dispose();
+				}
+				
+				@Override
+				public void widgetDefaultSelected(SelectionEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			classButton.setLayoutData(data);
+			classButton.pack();
+		}
+//		druidButton.setLayoutData(data);
+//		hunterButton.setLayoutData(data);
+//		mageButton.setLayoutData(data);
+//		paladinButton.setLayoutData(data);
+//		priestButton.setLayoutData(data);
+//		rogueButton.setLayoutData(data);
+//		shamanButton.setLayoutData(data);
+//		warlockButton.setLayoutData(data);
+//		warriorButton.setLayoutData(data);
+//		druidButton.pack();
+//		hunterButton.pack();
+//		mageButton.pack();
+//		paladinButton.pack();
+//		priestButton.pack();
+//		rogueButton.pack();
+//		shamanButton.pack();
+//		warlockButton.pack();
+//		warriorButton.pack();
 //		ArrayList<File> classes = new ArrayList<>(Arrays.asList(f.listFiles()));
 //		for(File playerClassFile : classes){
 //			String playerClass = playerClassFile.getName();

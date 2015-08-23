@@ -182,7 +182,7 @@ public class DeckWindow {
 					frameLabel.pack();
 					
 					Label imageLabel = new Label(comp,SWT.NORMAL);
-					String fileName = dce.getCard().getName().toLowerCase().replaceAll("[^a-z0-9]", "-")+".png";
+					String fileName = dce.getCard().getFileName()+".png";
 					InputStream is = DeckWindow.class.getResourceAsStream("/resources/cards/"+fileName);
 					if(is != null){
 						Image img = new Image(display, is);

@@ -1,19 +1,20 @@
 package hsdecktracker;
 
 public class Card extends Object {
-	private String id;
-	private String name;
-	private String type;
-	private String faction;
-	private String rarity;
-	private int cost;
-	private String text;
-	private String flavor;
-	private String artist;
-	private Boolean collectible;
-	private String playerClass;
-	private String howToGet;
-	private String howToGetGold;
+	private String id = null;
+	private String name = null;
+	private String type = null;
+	private String faction = null;
+	private String rarity = null;
+	private int cost = -1;
+	private String text = null;
+	private String flavor = null;
+	private String artist = null;
+	private Boolean collectible = false;
+	private PlayerClass playerClass = null;
+	private String howToGet = null;
+	private String howToGetGold = null;
+	private String cardSet = null;
 	/**
 	 * @return the id
 	 */
@@ -137,13 +138,13 @@ public class Card extends Object {
 	/**
 	 * @return the playerClass
 	 */
-	public String getPlayerClass() {
+	public PlayerClass getPlayerClass() {
 		return playerClass;
 	}
 	/**
 	 * @param playerClass the playerClass to set
 	 */
-	public void setPlayerClass(String playerClass) {
+	public void setPlayerClass(PlayerClass playerClass) {
 		this.playerClass = playerClass;
 	}
 	/**
@@ -171,6 +172,18 @@ public class Card extends Object {
 		this.howToGetGold = howToGetGold;
 	}
 	
+	/**
+	 * @return the cardSet
+	 */
+	public String getCardSet() {
+		return cardSet;
+	}
+	/**
+	 * @param cardSet the cardSet to set
+	 */
+	public void setCardSet(String cardSet) {
+		this.cardSet = cardSet;
+	}
 	public static Card findByNameSane(String name){
 		return AllCards.findCardByNameSane(name);
 	}
@@ -194,5 +207,23 @@ public class Card extends Object {
 		final Card other = (Card) obj;
 		return other.getId().equals(getId());
 	}
+	
+	public int getMaxAmount(){
+		if(this.getRarity().equals("Legendary")){
+			return 1;
+		}
+		return 2;
+	}
+	
+	public int getMinAmount(){
+		if(this.getCardSet().equals("Basic")){
+			return this.getMaxAmount();
+		}
+		return 0;
+	}
 
+	public String getFileName(){
+		return this.getName().toLowerCase().replaceAll("[^a-z0-9]", "-");
+	}
+	
 }
